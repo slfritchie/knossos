@@ -73,8 +73,7 @@
                  (CASRegister. new)
                  (inconsistent (str "can't CAS " value " from " cur
                                     " to " new))))
-      :read  (if (or (nil? (:value op))
-                     (= value (:value op)))
+      :read  (if (= value (:value op))
                r
                (inconsistent (str "can't read " (:value op)
                                   " from register " value)))))
@@ -112,8 +111,7 @@
     (reduce (fn [state [f k v]]
               ; Apply this particular op
               (case f
-                :read  (if (or (nil? v)
-                               (= v (get state k)))
+                :read  (if (= v (get state k))
                          state
                          (reduced
                            (inconsistent
